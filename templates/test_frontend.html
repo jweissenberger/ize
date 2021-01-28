@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>GPT Test</title>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- This script should go in another file -->
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+
+            var socket = io.connect('http://127.0.0.1:5000');
+
+            socket.on('connect', function(){
+                console.log('User has connected!');
+            });
+
+            socket.on('message', function(msg){
+               $("#output").html(msg);
+            }
+            );
+
+            $('#sendbutton').on('click', function(){
+                socket.send($('#myMessage').val());
+                $('#myMessage').val('');
+
+            }
+            );
+        }
+        );
+    </script>
+
+    <h1 id="output">Original Text</h1>
+    <input type="text" id="myMessage">
+    <button id="sendbutton">Send</button>
+</body>
+
+</html>
