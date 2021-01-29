@@ -1,3 +1,4 @@
 *.idea
 prompt.txt
 key.txt
+*.ipynb_checkpoints/*
