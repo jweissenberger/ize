@@ -11,7 +11,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def intakeMessage(msg):
     print("Message: " + msg)
 
-    # intake the message and pass it into GPT-3
+    # intake the message and pass it into GPT-3 use exec() and a try except block
 
     # then send the output or graph back to the user instead of the message here
     send(msg, broadcast=True)  # If broadcast is false it will only send to one user (want to do that in the future)
