@@ -1,0 +1,11 @@
+Streamlit is literally perfect and a build your own web app that will make this infinitely easier
+
+File uploader: https://docs.streamlit.io/en/stable/api.html?highlight=file#streamlit.file_uploader
+
+spinner: https://docs.streamlit.io/en/stable/api.html#streamlit.spinner
+
+Deploy with authentication: https://discuss.streamlit.io/t/deployment-on-aws-with-authentication/4073
+
+Deployment wiki: https://discuss.streamlit.io/t/streamlit-deployment-guide-wiki/5099
+
+Session state: https://gist.github.com/tvst/036da038ab3e999a64497f42de966a92
