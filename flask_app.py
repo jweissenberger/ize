@@ -62,7 +62,7 @@ def intakeMessage(msg):
 
 
     print("output:", output)
-    if type(output) == pd.core.series.Series and len(output) == 1:
+    if dtype == pd.core.series.Series and len(output) == 1:
         command = f"output = {response.choices[0].text.replace('A: ', '')}.iloc[0]"
         exec(command)
         output = int(output)
