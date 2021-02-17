@@ -3,6 +3,11 @@
 
 Powered by GPT-3
 
+
+![](demo_ize.gif)
+
+
+
 Upload your data to the web app and then simply ask questions about your data in plain english or ask it to create a chart. 
 
 Ex: 
@@ -16,4 +21,5 @@ Ex:
 
 ### To run the app:
 `pip install -r requirements.txt`
+
 `streamlit run streamlit_app.py`
