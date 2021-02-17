@@ -1,5 +1,5 @@
 *.idea
-prompt.txt
+*prompt.txt
 key.txt
 *.ipynb_checkpoints/*
 *.csv

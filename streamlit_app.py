@@ -16,14 +16,19 @@ def file_reader(file):
 
     return None
 
-
+# Get gpt-3 key
 f = open("key.txt", "r")
 key = f.read()
 f.close()
-f = open("prompt.txt", "r")
-prompt = f.read()
-f.close()
 openai.api_key = key
+
+f = open("analyze_prompt.txt", "r")
+analyze_prompt = f.read()
+f.close()
+
+f = open("visualize_prompt.txt", "r")
+visualize_prompt = f.read()
+f.close()
 
 
 st.title('IZE')
@@ -48,38 +53,60 @@ if uploaded_file is not None and df is not None:
 
     if user_input and user_input != example:
         with st.spinner('Loading...'):
-            new_prompt = f"{prompt}\n\nQ:{user_input} columns: {list(df.columns)}\n"
 
-            response = openai.Completion.create(engine='davinci',
-                                                prompt=new_prompt,
-                                                stop='\n',
-                                                temperature=0,
-                                                top_p=1,
-                                                frequency_penalty=0,
-                                                presence_penalty=0,
-                                                max_tokens=150
-                                                )
+            if 'graph' in user_input.lower() or 'chart' in user_input.lower() or 'plot' in user_input.lower():
+                new_prompt = f"{visualize_prompt}\n\nQ:{user_input} columns: {list(df.columns)}\n"
 
-            output = ''
-            command = f"output = {response.choices[0].text.replace('A: ', '')}; dtype = type(output)"
-            print("command:", command)
-            ldict = {}
-            exec(command, globals(), ldict)
+                response = openai.Completion.create(engine='davinci',
+                                                    prompt=new_prompt,
+                                                    stop='\n',
+                                                    temperature=0,
+                                                    top_p=1,
+                                                    frequency_penalty=0,
+                                                    presence_penalty=0,
+                                                    max_tokens=150
+                                                    )
+                command = f"output = {response.choices[0].text.replace('A: ', '')}; dtype = type(output)"
+                print("command:", command)
+                ldict = {}
+                exec(command, globals(), ldict)
 
-            print('output:', ldict['output'])
-            print('type:', ldict['dtype'])
-            output = ldict['output']
-            dtype = ldict['dtype']
 
-            if dtype == pd.core.series.Series and len(output) == 1:
-                command = f"output = {response.choices[0].text.replace('A: ', '')}.iloc[0]"
-                exec(command)
-                output = int(output)
 
-            if dtype in [int, np.int, np.int64, np.int32]:
-                st.text(output)
 
-            if dtype in [pd.core.frame.DataFrame, pd.core.series.Series]:
-                st.dataframe(output)
+            else:
+                new_prompt = f"{analyze_prompt}\n\nQ:{user_input} columns: {list(df.columns)}\n"
+
+                response = openai.Completion.create(engine='davinci',
+                                                    prompt=new_prompt,
+                                                    stop='\n',
+                                                    temperature=0,
+                                                    top_p=1,
+                                                    frequency_penalty=0,
+                                                    presence_penalty=0,
+                                                    max_tokens=150
+                                                    )
+
+                output = ''
+                command = f"output = {response.choices[0].text.replace('A: ', '')}; dtype = type(output)"
+                print("command:", command)
+                ldict = {}
+                exec(command, globals(), ldict)
+
+                print('output:', ldict['output'])
+                print('type:', ldict['dtype'])
+                output = ldict['output']
+                dtype = ldict['dtype']
+
+                if dtype == pd.core.series.Series and len(output) == 1:
+                    command = f"output = {response.choices[0].text.replace('A: ', '')}.iloc[0]"
+                    exec(command)
+                    output = int(output)
+
+                if dtype in [int, float, np.float, np.float64, np.float32, np.int, np.int64, np.int32]:
+                    st.text(output)
+
+                if dtype in [pd.core.frame.DataFrame, pd.core.series.Series]:
+                    st.dataframe(output)
 
 

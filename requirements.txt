@@ -3,3 +3,4 @@ Flask-SocketIO
 pandas
 openai
 streamlit
+matplotlib
