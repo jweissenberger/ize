@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import openai
 import numpy as np
+import altair as alt
+import matplotlib.pyplot as plt
 
 
 def file_reader(file):
